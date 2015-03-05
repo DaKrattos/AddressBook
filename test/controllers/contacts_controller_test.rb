@@ -10,8 +10,17 @@ class ContactsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:contacts)
   end
+  
+  test "deberia ser redirigido a la pagina de login si no esta autenticado" do
+    get :new
+    
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
 
-  test "should get new" do
+  test "should get new when user is loggedin" do
+    sign_in users(:one)
+    
     get :new
     assert_response :success
   end
